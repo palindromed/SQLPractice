@@ -27,13 +27,9 @@ Article.prototype.toHtml = function() {
 
 Article.prototype.insertRecord = function(callback) {
   // insert article record into database
-  webDB.execute(
-    // TODO: Add SQL here...
-    ,
-    callback
-  );
+  webDB.insertRecord(this, callback);
 };
-
+/*
 Article.prototype.updateRecord = function(callback) {
   //update article record in databse
   webDB.execute(
@@ -42,16 +38,16 @@ Article.prototype.updateRecord = function(callback) {
     callback
   );
 };
-
+*/
 Article.prototype.deleteRecord = function(callback) {
   // Delete article record in database
   webDB.execute(
-    // TODO: Add SQL here...
+    'DELETE * FROM articles WHERE id='+ this.id+';'
     ,
     callback
   );
 };
-
+/*
 Article.prototype.truncateTable = function(callback) {
   // Delete all records from given table.
   webDB.execute(
@@ -60,3 +56,4 @@ Article.prototype.truncateTable = function(callback) {
     callback
   );
 };
+*/
