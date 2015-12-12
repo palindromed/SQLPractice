@@ -28,20 +28,33 @@ Article.prototype.toHtml = function() {
 //What callback function needs to run?
 Article.prototype.insertRecord = function(callback) {
   // insert article record into database
-  webDB.insertRecord(this, callback);
+  webDB.execute(
+    [
+      {
+        'sql': 'INSERT INTO articles (title, author, authorUrl, category, publishedOn, markdown) VALUES (?, ?, ?, ?, ?, ?);',
+        'data': [this.title, this.author, this.authorUrl, this.category, this.publishedOn, this.markdown],
+      }
+    ], callback)
+
+
 };
 
 
-/*
 Article.prototype.updateRecord = function(callback) {
   //update article record in databse
   webDB.execute(
-    // TODO: Add SQL here...
-    ,
-    callback
-  );
+    'UPDATE articles SET author="'+ this.author +
+      '", title="'+ this.title+
+      '", authorUrl="' + this.authorUrl +
+      '", category="' + this.category +
+      '", publishedOn="' + this.publishedOn +
+      '", markdown="' + this.markdown+
+      'WHERE id=' + this.id+';'
+      ,
+
+    callback)
 };
-*/
+
 Article.prototype.deleteRecord = function(callback) {
   // Delete article record in database
   webDB.execute(
@@ -54,7 +67,7 @@ Article.prototype.deleteRecord = function(callback) {
 Article.prototype.truncateTable = function(callback) {
   // Delete all records from given table.
   webDB.execute(
-    'TRUNCATE TABLE articles;'
+    'DELETE FROM articles;'
     ,
     callback
   );

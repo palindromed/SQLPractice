@@ -44,7 +44,8 @@ blog.updateFromJSON = function (data) {
     blog.articles.push(article);
 
     // Cache the article in DB
-    webDB.insertRecord(article);
+    article.insertRecord();
+
   });
   blog.initArticles();
 };
@@ -54,7 +55,7 @@ blog.fetchFromDB = function(callback) {
 
   // Fetch all articles from db.
   webDB.execute(
-    'SELECT * FROM articles;'
+    'SELECT * FROM articles ORDER BY publishedOn DESC;'
     ,
     function (resultArray) {
       resultArray.forEach(function(ele) {
@@ -296,7 +297,7 @@ blog.handleAddButton = function () {
   $('#add-article-btn').on('click', function (e) {
     var article = blog.buildArticle()
     // Insert this new record into the DB, then callback to blog.clearAndFetch
-    webDB.insertRecord(article, blog.clearAndFetch());
+    article.insertRecord(article, blog.clearAndFetch);
   });
 };
 
@@ -307,16 +308,7 @@ blog.handleUpdateButton = function () {
     article.id = id;
 
     // Save changes to the DB:
-    webDB.execute(
-      'UPDATE articles SET author='+ article.author +
-        ', title='+ article.title+
-        ', authorUrl='+article.authorUrl +
-        ', category='+article.category +
-        ', publishedOn='+ article.publishedOn +
-        ', markdown=' + article.body+
-        'WHERE id='+article.id+';',
-
-      blog.clearAndFetch())
+    article.updateRecord(blog.clearAndFetch);
 
 
   });
