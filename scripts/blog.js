@@ -236,7 +236,7 @@ blog.fillFormWithArticle = function (a) {
   $('#article-author').val(a.author);
   $('#article-author-url').val(a.authorUrl);
   $('#article-category').val(a.category);
-  $('#article-body').val(a.markdown);
+  $('#article-body').val(a.body);
   $('#article-published').attr('checked', checked);
   blog.buildPreview(); // Show the initial preview
 };
