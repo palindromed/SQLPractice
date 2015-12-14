@@ -47,20 +47,6 @@ webDB.setupTables = function () {
 };
 
 
-webDB.insertRecord = function (data) {
-  // insert article record into database
-  html5sql.process(
-    [
-      {
-        'sql': 'INSERT INTO articles (title, author, authorUrl, category, publishedOn, markdown) VALUES (?, ?, ?, ?, ?, ?);',
-        'data': [data.title, data.author, data.authorUrl, data.category, data.publishedOn, data.markdown],
-      }
-    ],
-    function () {
-      console.log('Success inserting record for ' + data.title);
-    }
-  );
-};
 
 webDB.execute = function (sql, callback) {
   callback = callback || function() {};

@@ -88,7 +88,7 @@ blog.render = function() {
 
   // Get all articles from the DB to render:
   webDB.execute(
-    'SELECT * FROM articles;'
+    'SELECT * FROM articles ORDER BY publishedOn DESC;'
     , function(results) {
     results.forEach(function(ele) { blog.appendArticle(ele); });
   });
@@ -313,15 +313,15 @@ blog.handleUpdateButton = function () {
 
   });
 };
-/*
+
 blog.handleDeleteButton = function () {
   $('#delete-article-btn').on('click', function () {
     var id = $(this).data('article-id');
     // Remove this record from the DB:
+
     webDB.execute(
-      // TODO: Add SQL here...
+      'DELETE FROM articles WHERE id='+id+';'
       , blog.clearAndFetch);
     blog.clearNewForm();
   });
 };
-*/
